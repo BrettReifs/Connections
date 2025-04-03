@@ -1,0 +1,312 @@
+Microsoft Connections Game
+Product Requirements Document (Comprehensive V1)
+1. Product Overview
+1.1 Product Name: Microsoft Connections
+
+1.2 Product Description: An educational word association puzzle game based on Microsoft documentation and technologies. Players must identify four groups of four words, with each group sharing a common Microsoft-related theme or connection.
+
+1.3 Target Audience:
+* Microsoft technology learners
+* Software developers
+* IT professionals
+* Technology enthusiasts
+* Microsoft certification candidates
+
+1.4 Educational Purpose:
+* Reinforce knowledge of Microsoft technologies, services, and concepts in an engaging format.
+* Make learning more interactive and memorable.
+
+2. Game Mechanics
+2.1 Basic Structure:
+* Players are presented with a grid containing 16 words (initially 4x4).
+* These words form 4 distinct groups of 4 words each.
+* Each group has a common theme related to Microsoft technologies, products, or concepts.
+* Players must identify all four groups correctly to win.
+
+2.2 Difficulty Levels:
+Words are grouped into four color-coded difficulty levels:
+
+Yellow (Easiest): Straightforward connections, common products/concepts. Minimal ambiguity. (#F9DF6D)
+
+Green (Moderate): More specific technologies/features. Requires basic familiarity. Slight ambiguity possible. (#A0C35A)
+
+Blue (Challenging): Non-obvious connections requiring deeper knowledge. May include red herrings or vague terminology. (#4AADEE)
+
+Purple (Most Difficult / Tricky): Implements complex patterns (abstract relationships, misleading commonalities, homonyms, specific jargon, wordplay, overlapping categories). Requires recognizing subtle patterns. (#A16AE8)
+
+2.3 Gameplay Flow:
+
+Player is presented with the grid of 16 words (or the remaining words if groups have been solved).
+
+Player selects words they believe belong to the same group. The UI clearly indicates selected words.
+
+When exactly 4 words are selected, the player submits their guess via the "Submit" button.
+
+Guess Evaluation:
+
+Check for Correct Group: The system checks if the 4 selected words match a complete, unsolved group defined in the current puzzle.
+
+If Correct:
+
+The 4 words are removed from the grid.
+
+The grid reorganizes to display the remaining words compactly.
+
+The group's theme and difficulty color are revealed in the "Solved Groups" area.
+
+The level progress indicator is updated.
+
+Selection is cleared, and the "Submit" button is disabled.
+
+Check for win condition (all 4 groups solved).
+
+If Incorrect:
+
+Check for Duplicate Guess: The system checks if this exact combination of 4 words has already been submitted incorrectly during the current game session.
+
+If Duplicate: Display message "You've already guessed that!" The selection remains, no mistake is counted.
+
+If Not Duplicate:
+
+Record this combination in a temporary list of incorrect guesses for the current session.
+
+Player loses one "mistake" attempt. Update the mistake counter display.
+
+Check for "One Off": Determine if the incorrect guess contains exactly 3 words belonging to one of the remaining unsolved groups.
+
+If "One Off": Display message "One off..."
+
+If Not "One Off": Display a general incorrect guess message (optional, or just rely on mistake counter change and shake animation).
+
+Trigger visual feedback (e.g., shake animation on the grid/tiles).
+
+Selection is cleared.
+
+Check for lose condition (0 mistakes remaining).
+
+Game continues until all groups are identified (Win Condition) or all mistakes are used (Lose Condition).
+
+Starting a "New Game" clears the grid, resets mistakes, clears the list of previous incorrect guesses for the session, and loads a new puzzle.
+
+2.4 Win/Lose Conditions:
+* Players start with 4 "mistakes" available.
+* Lose Condition: Player uses all 4 mistakes without finding all groups.
+* Display "Better Luck Next Time" message.
+* Reveal all correct groupings and their themes.
+* Provide options to quit or start a new game.
+* Win Condition: Player identifies all 4 groups before using all mistakes.
+* Display "You've won!" message with confetti animation.
+* Provide options to quit or start a new game.
+* New game resets the word grid, mistake counter (to 4), hint status, and previous guesses list.
+
+2.5 Hint System:
+* A "Show Hint" button becomes available after 2 mistakes have been made.
+* Clicking the button reveals the theme/category name for one of the remaining unsolved groups.
+* Only one hint can be used per game.
+* The hint button is disabled after use or if the game ends.
+* The revealed hint should be displayed clearly in the message area or a dedicated hint container.
+
+3. User Interface Design
+3.1 Main Game Screen Elements:
+* Word Grid: Displays the active word tiles (initially 4x4).
+* Grid Reorganization: After a group is correctly identified, its words are removed, and the remaining word tiles dynamically reorganize to fill the empty space, maintaining a compact and visually clean grid layout.
+* Visual Indication of Selected Words: Clear highlighting/border changes (e.g., distinct background color, scaling).
+* Mistake Counter Display: Shows remaining mistakes visually (e.g., 4 icons/dots that dim or change color when used).
+* Level Progress Indicator: Shows how many groups have been successfully found (e.g., using 4 dots that fill with the corresponding group color upon success).
+* Difficulty Legend: Clearly displays the color mapping for difficulty levels (Easy, Medium, Hard, Tricky) visible during gameplay.
+* Submit Button: Enabled only when exactly 4 words are selected.
+* Deselect All Button: Allows the user to clear their current selection easily.
+* Hint Button: Visible but disabled initially; enabled after 2 mistakes are made (if not already used).
+* Solved Groups Display Area: Shows completed groups, their themes, and their corresponding difficulty color, typically appearing above the main grid as they are solved.
+* Game Controls: Button for "New Game".
+* Message Area: Displays feedback messages ("Correct!", "Incorrect guess.", "One off...", "You've already guessed that!", hints, win/lose messages). aria-live attribute for accessibility.
+
+3.2 Visual Design Elements:
+* Color Scheme: Use specified difficulty colors: Yellow (#F9DF6D), Green (#A0C35A), Blue (#4AADEE), Purple (#A16AE8). Ensure sufficient contrast for text.
+* Feedback Animations:
+* Incorrect guess: Shake animation on selected tiles or grid.
+* Correct guess: Solved group animates into the solved area (e.g., pop-in).
+* Win: Confetti animation.
+* Typography: Use a clean, readable font (e.g., Inter). Ensure adequate text size.
+* Icons: Use icons (e.g., from Lucide) for buttons like Hint or for mistake indicators where appropriate.
+
+3.3 Responsive Design:
+* Layout must adapt fluidly to desktop, tablet, and mobile screen sizes.
+* Controls must be touch-friendly (adequate size and spacing) on mobile devices.
+* Define minimum viable screen size for playability.
+* Ensure proper z-index handling to prevent UI element overlap.
+
+4. Content Strategy
+4.1 Puzzle Creation Guidelines:
+* Each puzzle contains 16 words forming 4 distinct groups.
+* Groups should be clearly distinct with minimal overlap in concept (though words might seem related as red herrings).
+* Higher difficulty groups must follow the established patterns (see 2.2). Purple categories should encourage lateral thinking or require deeper/historical Microsoft knowledge.
+* All content must relate to Microsoft documentation, products, services, history, or technologies.
+
+4.2 Content Sources:
+* Microsoft official documentation (Azure, M365, Windows, etc.)
+* Microsoft Learn paths and modules
+* Azure service descriptions and concepts
+* Microsoft 365 features and documentation
+* Developer tools and resources (Visual Studio, .NET, GitHub)
+* Microsoft certification materials
+* Microsoft history, strategy, and key initiatives
+
+4.3 Example Puzzle Structure:
+* Yellow Example: {Words: Word, Excel, PowerPoint, Outlook}, {Theme: Microsoft Office core applications}
+* Green Example: {Words: VM, Storage, Database, App Service}, {Theme: Azure resource types}
+* Blue Example: {Words: Cosmos, Fabric, Purview, Sentinel}, {Theme: Azure services that are also common English words}
+* Purple Example: {Words: Edge, Surface, Power, Dynamics}, {Theme: Microsoft product names that are also physical concepts}
+
+4.4 Puzzle Library:
+* Initial release target: 50 puzzles of varying difficulty.
+* Puzzles should be categorized by general topic (e.g., Azure, Microsoft 365, Developer Tools, Windows, Hardware, Strategy).
+* Each puzzle needs a unique ID for tracking.
+
+4.5 Content Rotation and Updates:
+* New puzzles added periodically post-launch.
+* Potential for special themed puzzles related to Microsoft product launches or events.
+* Implement logic to avoid immediate repetition of puzzles (see 5.5).
+
+4.6 New Puzzle Category Examples (from Updates):
+* Microsoft Office File Extensions
+* Windows Keyboard Shortcuts
+* Microsoft Browsers (Past & Present)
+* Microsoft Hardware Peripherals
+* Microsoft CEO Initiatives / Strategy Paradigms
+* Microsoft Store App Categories
+* Microsoft Technologies Driving Industry Revolutions
+* Microsoft Products That Changed Direction / Were Canceled
+* Microsoft Products with '365' in Their Name
+* Microsoft Products That Revolutionized Computing
+
+5. Technical Requirements
+5.1 Web Application Architecture:
+* Frontend: HTML5, CSS3, JavaScript.
+* Client-side rendering and logic only (no backend required for core gameplay).
+* Use Tailwind CSS for styling.
+
+5.2 Core Functionality:
+* Word grid rendering and reorganization logic.
+* Word selection and deselection handling.
+* Guess submission and validation logic (including duplicate guess check).
+* Group validation algorithm.
+* Mistake tracking and "One off..." detection.
+* Win/lose condition handling.
+* Hint system logic.
+* Animation and visual feedback implementation.
+* Game state management (current puzzle, selected words, solved groups, mistakes, hint status, previous guesses).
+* New game generation and state reset.
+* Statistics tracking and persistence.
+
+5.3 Performance Requirements:
+* Initial load time under 3 seconds on a standard connection.
+* Responsive UI with no perceptible lag during interactions (selection, submission).
+* Works reliably on modern versions of major browsers (Chrome, Edge, Firefox, Safari).
+
+5.4 Storage Handling:
+* Use browser localStorage as the primary mechanism for persisting game statistics and tutorial viewed status.
+* Implement a memory-based fallback storage mechanism if localStorage is unavailable or disabled (stats will not persist across sessions in this case).
+
+5.5 Puzzle Rotation System:
+* Track the ID of the last played puzzle in storage.
+* When starting a new game, attempt to select a puzzle whose ID does not match the last played ID. If only one puzzle exists or all others have been played recently in some theoretical longer history, repetition is acceptable.
+
+6. User Experience Flow
+6.1 First-Time User:
+1.  Welcome/Intro screen with brief game description.
+2.  Display "How to Play" button prominently.
+3.  Show tutorial overlay automatically upon starting the first game or clicking "How to Play". Tutorial covers core mechanics, UI elements, and feedback types (including "One off..." and "Already Guessed").
+4.  Mark tutorial as seen in storage after the user closes it.
+
+6.2 Return User:
+1.  Welcome/Intro screen displays current game statistics (Games Played, Wins, Win Rate, Avg. Mistakes).
+2.  Direct access to "Start Game" button.
+3.  "How to Play" button remains available.
+4.  Tutorial does not show automatically.
+
+6.3 Game Completion:
+1.  Clear win/lose screen with appropriate message and animations (confetti/reveal).
+2.  Display final score/mistakes for the completed game.
+3.  If lost, reveal all correct group answers.
+4.  Update and save game statistics.
+5.  Provide clear options for next actions ("New Game", "Quit" - though Quit might just mean navigating away).
+
+7. Accessibility Considerations
+7.1 Visual Clarity:
+* Ensure sufficient color contrast between text, backgrounds, and interactive elements (WCAG AA minimum).
+* Maintain readable text sizes across different devices and zoom levels.
+* Use distinctive visual indicators for game state changes (selection, mistakes, solved groups) beyond color alone where possible.
+
+7.2 Interactive Elements:
+* Implement proper focus states (:focus-visible) for all interactive elements (buttons, word tiles) for keyboard navigation.
+* Ensure all clickable elements have appropriate target sizes (minimum 44x44 CSS pixels) for touch interaction.
+* Provide clear visual feedback on interaction (hover, focus, active/pressed states).
+
+7.3 Screen Reader Support:
+* Use semantic HTML where appropriate.
+* Use aria-live regions for dynamic content like the message area and mistake counter updates.
+* Ensure buttons and interactive elements have accessible names.
+
+8. Future Enhancements (Potential)
+* User accounts and cloud-saved progress/statistics.
+* Daily puzzle challenge feature.
+* Leaderboards (global or friend-based).
+* Social sharing of results.
+* Explicit difficulty selection before starting a game.
+* Filtering puzzles by topic category.
+* Achievement system or badges.
+* Timed mode option.
+* Sound effects for feedback.
+* Community-submitted puzzles (with moderation).
+
+9. Success Metrics
+* User engagement: Daily/Monthly Active Users (DAU/MAU), average session duration.
+* Game completion rates (Win %).
+* Retention: Return visits, frequency of play.
+* Feature usage: Hint usage rate.
+* User feedback: Qualitative feedback via surveys or feedback forms.
+
+10. Implementation Timeline (Example)
+Phase 1: Core Gameplay (4 weeks)
+
+Basic UI implementation (Grid, Buttons, Solved Area).
+
+Core game logic (Selection, Submission, Win/Lose, Mistakes).
+
+Initial puzzle set integration.
+
+Grid reorganization logic.
+
+Phase 2: Enhanced Feedback & Polish (3 weeks)
+
+Implement Duplicate Guess check & "One Off" logic.
+
+Implement Hint system.
+
+Add animations (Shake, Confetti, Pop-in).
+
+Visual design refinement (Colors, Fonts, Layout).
+
+Statistics tracking and storage implementation.
+
+Tutorial implementation.
+
+Phase 3: Testing & Accessibility (2 weeks)
+
+Cross-browser and responsive testing.
+
+Accessibility testing and remediation.
+
+User testing and feedback incorporation.
+
+Performance optimization.
+
+Phase 4: Launch (1 week)
+
+Final bug fixes.
+
+Deployment.
+
+Appendix: Sample Puzzle Library
+(This section would contain the detailed specifications for the initial 50 puzzles, including words, categories, difficulty levels, and unique IDs. Content TBD.)
